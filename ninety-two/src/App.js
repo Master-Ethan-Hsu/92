@@ -1,11 +1,11 @@
-import { MainLayout } from './components/MainLayout';
-import { Navbar } from './components/Navbar';
+import { MainLayout } from "./components/MainLayout";
+import { Navbar } from "./components/Navbar";
 
 function App() {
   return (
     <>
-      <Navbar/>
-      <MainLayout/>
+      <Navbar />
+      <MainLayout></MainLayout>
     </>
   );
 }
