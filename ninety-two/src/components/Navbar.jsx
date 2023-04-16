@@ -9,7 +9,8 @@ import logo from "../images/logo.png";
 const styles = {
   NavbarStyle: {
     display: "flex",
-    background: "#9F6E3D",
+    background: "#ac7c4c",
+    position: "fixed",
   },
   NavbarText: {
     mr: 3,
