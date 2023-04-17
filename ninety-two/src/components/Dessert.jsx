@@ -17,15 +17,14 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { getProductData } from "../api/NTApi";
 import { useState, useEffect } from "react";
 
-export const Product = () => {
+export const Dessert = () => {
   const [productData, setProductData] = useState();
   const [showPic, setShowPic] = useState(false);
 
   const getData = async () => {
     const productData = await getProductData();
-    setProductData(productData[0]);
-    console.log(productData[0].pic);
-    return productData[0];
+    setProductData(productData[2]);
+    console.log(productData[2].pic);
   };
 
   useEffect(() => {

@@ -1,14 +1,14 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import { Product } from "./Product";
+import { Dessert } from "./Dessert";
+import {  useLocation  } from "react-router-dom";
+
+
 const styles = {
   mainContainer: {
     height: "150vh",
-    color: "red",
     backgroundColor: "#FDF5E6",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    overflow: "hidden",
+    overflow:"hidden"
   },
   landingImage: {
     mt: 30,
@@ -20,6 +20,9 @@ const styles = {
   /* <Product /> */
 }
 export const MainLayout = () => {
+
+  const { pathname } = useLocation();
+
   return (
     <Box sx={styles.mainContainer}>
       <Box
@@ -29,11 +32,15 @@ export const MainLayout = () => {
           alignItems: "flex-start",
         }}
       >
+        {pathname === "dessert" ? 
+        <Dessert/> 
+        :    
         <Box
-          component={"img"}
-          sx={styles.landingImage}
-          src={require("../images/landing_image.png")}
-        ></Box>
+              component={"img"}
+              sx={styles.landingImage}
+              src={require("../images/landing_image.png")}
+            />}
+
       </Box>
     </Box>
   );
