@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import logo from "../images/logo.png";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   NavbarStyle: {
@@ -16,13 +16,12 @@ const styles = {
   NavbarText: {
     mr: 3,
     fontSize: 20,
-    cursor:"pointer",
-    
+    cursor: "pointer",
   },
 };
 
 export const Navbar = () => {
-  const navigate= useNavigate();
+  const navigate = useNavigate();
 
   return (
     <Box>
@@ -49,12 +48,20 @@ export const Navbar = () => {
                 ml: 5,
               },
             ]}
+            onClick={() => {
+              navigate("/");
+            }}
           >
             首頁 Home
           </Typography>
-          <Typography sx={styles.NavbarText} onClick={()=>{
-            navigate('/dessert')
-          }}>甜點Dessert</Typography>
+          <Typography
+            sx={styles.NavbarText}
+            onClick={() => {
+              navigate("/dessert");
+            }}
+          >
+            甜點Dessert
+          </Typography>
           <Typography sx={styles.NavbarText}>麵包Bread</Typography>
           <Typography sx={styles.NavbarText}>咖啡Coffee</Typography>
           <Typography sx={styles.NavbarText}>關於我們About us</Typography>
