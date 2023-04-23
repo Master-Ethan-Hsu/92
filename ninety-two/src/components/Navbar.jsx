@@ -5,69 +5,142 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import logo from "../images/logo.png";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
+import { useState } from "react";
+import Drawer from "@mui/material/Drawer";
 
 const styles = {
   NavbarStyle: {
-    display: "flex",
-    background: "#ac7c4c",
+    background: "#c3b3a4",
     position: "sticky",
   },
   NavbarText: {
-    mr: 3,
-    fontSize: 20,
+    fontSize: 15,
     cursor: "pointer",
+    mr: "1rem",
+    // "@media (max-width: 900px)": {
+    //   fontSize: 6,
+    // },
   },
 };
 
 export const Navbar = () => {
   const navigate = useNavigate();
+  const media900 = useMediaQuery("(max-width: 900px)");
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
+  const list = () => (
+    <Box sx={{ width: 280 }} role="presentation" onClick={toggleDrawer()}>
+      <List sx={{ pt: 3, pl: 2 }}>
+        {["麵包Bread", "咖啡Coffee", "關於我們About us", "Q&A"].map((text) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
 
   return (
     <Box>
-      <AppBar sx={styles.NavbarStyle} position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
+      {media900 ? (
+        <AppBar sx={styles.NavbarStyle}>
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ display: "flex" }}
+            >
+              <Box
+                component="img"
+                sx={{ width: "40px", height: "40px" }}
+                alt="The house from the offer."
+                src={logo}
+              />
+            </IconButton>
+
+            <Box>
+              <MenuIcon onClick={toggleDrawer()}></MenuIcon>
+              <Drawer
+                anchor="right"
+                open={isDrawerOpen}
+                onClose={toggleDrawer()}
+                PaperProps={{
+                  sx: {
+                    backgroundColor: "#c3b3a4",
+                  },
+                }}
+              >
+                {list()}
+              </Drawer>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      ) : (
+        <AppBar sx={styles.NavbarStyle}>
+          <Toolbar sx={{ display: "flex", flexDirection: "column" }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <Box
+                component="img"
+                sx={{ width: "90px", height: "90px" }}
+                alt="The house from the offer."
+                src={logo}
+              />
+            </IconButton>
             <Box
-              component="img"
-              sx={{ width: "110px", height: "110px" }}
-              alt="The house from the offer."
-              src={logo}
-            />
-          </IconButton>
-          <Typography
-            sx={[
-              styles.NavbarText,
-              {
-                ml: 5,
-              },
-            ]}
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            首頁 Home
-          </Typography>
-          <Typography
-            sx={styles.NavbarText}
-            onClick={() => {
-              navigate("/dessert");
-            }}
-          >
-            甜點Dessert
-          </Typography>
-          <Typography sx={styles.NavbarText}>麵包Bread</Typography>
-          <Typography sx={styles.NavbarText}>咖啡Coffee</Typography>
-          <Typography sx={styles.NavbarText}>關於我們About us</Typography>
-          <Typography sx={styles.NavbarText}>Q&A</Typography>
-        </Toolbar>
-      </AppBar>
+              sx={{
+                display: "flex",
+                mb: 2.5,
+              }}
+            >
+              <Typography
+                sx={styles.NavbarText}
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                首頁 Home
+              </Typography>
+              <Typography
+                sx={styles.NavbarText}
+                onClick={() => {
+                  navigate("/dessert");
+                }}
+              >
+                甜點Dessert
+              </Typography>
+              <Typography sx={styles.NavbarText}>麵包Bread</Typography>
+              <Typography sx={styles.NavbarText}>咖啡Coffee</Typography>
+              <Typography sx={styles.NavbarText}>關於我們About us</Typography>
+              <Typography sx={styles.NavbarText}>Q&A</Typography>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      )}
     </Box>
   );
 };

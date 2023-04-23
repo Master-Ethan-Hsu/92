@@ -1,17 +1,16 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { Dessert } from "./Dessert";
-import {  useLocation  } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 
 const styles = {
   mainContainer: {
     height: "150vh",
     backgroundColor: "#FDF5E6",
-    overflow:"hidden"
+    overflow: "hidden",
   },
   landingImage: {
-    mt: 30,
+    // position:"sticky",
     width: "99vw",
     borderRadius: "8px",
   },
@@ -20,7 +19,6 @@ const styles = {
   /* <Product /> */
 }
 export const MainLayout = () => {
-
   const { pathname } = useLocation();
 
   return (
@@ -32,15 +30,15 @@ export const MainLayout = () => {
           alignItems: "flex-start",
         }}
       >
-        {pathname === "dessert" ? 
-        <Dessert/> 
-        :    
-        <Box
-              component={"img"}
-              sx={styles.landingImage}
-              src={require("../images/landing_image.png")}
-            />}
-
+        {pathname === "dessert" ? (
+          <Dessert />
+        ) : (
+          <Box
+            component={"img"}
+            sx={styles.landingImage}
+            src={require("../images/landing_image.png")}
+          />
+        )}
       </Box>
     </Box>
   );
