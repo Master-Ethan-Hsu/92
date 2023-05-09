@@ -1,40 +1,42 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { getProductData } from '../api/NTApi';
-import { useState, useEffect } from 'react';
-import { Box } from '@mui/material';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { getProductData } from "../api/NTApi";
+import { useState, useEffect } from "react";
+import { Box, Divider } from "@mui/material";
 
 export const Dessert = () => {
   const [productData, setProductData] = useState();
-  const [showPic, setShowPic] = useState(false);
   const [showComponent, setShowComponent] = useState(false);
 
   const getData = async () => {
     const productData = await getProductData();
-    setProductData(productData);
+    try {
+      if (productData) setProductData(productData);
+    } catch {
+      throw new Error("can't get product data !");
+    }
   };
 
   useEffect(() => {
     getData();
-    console.log('call api');
+    console.log("call api");
   }, []);
 
   useEffect(() => {
-    console.log('getting data');
+    console.log("getting data");
     console.log(productData);
     if (productData) {
       setShowComponent(true);
-      setShowPic(true);
       console.log(productData);
       console.log(
         productData.map((product) => {
@@ -44,7 +46,6 @@ export const Dessert = () => {
           // console.log(product.pic);
         })
       );
-      console.log(showPic);
     }
   }, [productData]);
 
@@ -52,82 +53,63 @@ export const Dessert = () => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
   })(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
+    transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
     }),
   }));
 
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
   return (
-    <Box>
+    <Box
+      sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-evenly" }}
+    >
       {showComponent ? (
-        productData.map((product) => {
-          <Card sx={{ maxWidth: 345 }}>
-            <CardHeader title={product.name} subheader='September 14, 2016' />
-            <CardContent>
-              <Typography variant='body2' color='text.secondary'>
-                This impressive paella is a perfect party dish and a fun meal to
-                cook together with your guests. Add 1 cup of frozen peas along
-                with the mussels, if you like.
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-              <IconButton aria-label='add to favorites'>
-                <FavoriteIcon />
-              </IconButton>
-              <IconButton aria-label='share'>
-                <ShareIcon />
-              </IconButton>
-              <ExpandMore
-                expand={expanded}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label='show more'
-              >
-                <ExpandMoreIcon />
-              </ExpandMore>
-            </CardActions>
-            <Collapse in={expanded} timeout='auto' unmountOnExit>
-              <CardContent>
-                <Typography paragraph>Method:</Typography>
-                <Typography paragraph>
-                  Heat 1/2 cup of the broth in a pot until simmering, add
-                  saffron and set aside for 10 minutes.
-                </Typography>
-                <Typography paragraph>
-                  Heat oil in a (14- to 16-inch) paella pan or a large, deep
-                  skillet over medium-high heat. Add chicken, shrimp and
-                  chorizo, and cook, stirring occasionally until lightly
-                  browned, 6 to 8 minutes. Transfer shrimp to a large plate and
-                  set aside, leaving chicken and chorizo in the pan. Add
-                  pimentón, bay leaves, garlic, tomatoes, onion, salt and
-                  pepper, and cook, stirring often until thickened and fragrant,
-                  about 10 minutes. Add saffron broth and remaining 4 1/2 cups
-                  chicken broth; bring to a boil.
-                </Typography>
-                <Typography paragraph>
-                  Add rice and stir very gently to distribute. Top with
-                  artichokes and peppers, and cook without stirring, until most
-                  of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-                  medium-low, add reserved shrimp and mussels, tucking them down
-                  into the rice, and cook again without stirring, until mussels
-                  have opened and rice is just tender, 5 to 7 minutes more.
-                  (Discard any mussels that don&apos;t open.)
-                </Typography>
-                <Typography>
-                  Set aside off of the heat to let rest for 10 minutes, and then
-                  serve.
+        productData.map((product, key) => {
+          return (
+            <Card
+              sx={{
+                width: 300,
+                minHeight: 380,
+                my: 3,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+              key={key}
+            >
+              <CardHeader title={product.name} sx={{ py: 0 }} />
+              <CardContent sx={{ py: 0 }}>
+                <Box
+                  component="img"
+                  alt="pic"
+                  src={product.pic}
+                  sx={{ width: 200, height: 200, objectFit: "cover", pl: 4 }}
+                />
+                <Typography variant="body2" color="text.secondary">
+                  {product.note}
                 </Typography>
               </CardContent>
-            </Collapse>
-          </Card>;
+
+              {product.eating && (
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mt: 1, px: 1 }}
+                >
+                  {`食用方式： ${product.eating}`}
+                </Typography>
+              )}
+              <Divider />
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ py: 0, display: "flex" }}
+              >
+                {`價格 ${product.price}`}
+              </Typography>
+            </Card>
+          );
         })
       ) : (
         <Typography>no data</Typography>
@@ -135,77 +117,3 @@ export const Dessert = () => {
     </Box>
   );
 };
-
-const itemData = [
-  {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
-    author: '@bkristastucchio',
-    rows: 2,
-    cols: 2,
-    featured: true,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-    author: '@rollelflex_graphy726',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-    author: '@helloimnik',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
-    author: '@nolanissac',
-    cols: 2,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
-    author: '@hjrc33',
-    cols: 2,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
-    author: '@arwinneil',
-    rows: 2,
-    cols: 2,
-    featured: true,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
-    author: '@tjdragotta',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
-    author: '@katie_wasserman',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
-    author: '@silverdalex',
-    rows: 2,
-    cols: 2,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    title: 'Tomato basil',
-    author: '@shelleypauls',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-    title: 'Sea star',
-    author: '@peterlaster',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-    title: 'Bike',
-    author: '@southside_customs',
-    cols: 2,
-  },
-];
