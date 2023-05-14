@@ -35,12 +35,16 @@ export const Navbar = () => {
   const media900 = useMediaQuery("(max-width: 900px)");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const toggleDrawer = () => () => {
+  const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
+  const goNav = (url) => {
+    navigate(url);
+  };
+
   const list = () => (
-    <Box sx={{ width: 280 }} role="presentation" onClick={toggleDrawer()}>
+    <Box sx={{ width: 280 }} role="presentation" onClick={toggleDrawer}>
       <List sx={{ pt: 3, pl: 2 }}>
         {["麵包Bread", "咖啡Coffee", "關於我們About us", "Q&A"].map((text) => (
           <ListItem key={text} disablePadding>
@@ -74,11 +78,11 @@ export const Navbar = () => {
             </IconButton>
 
             <Box>
-              <MenuIcon onClick={toggleDrawer()}></MenuIcon>
+              <MenuIcon onClick={toggleDrawer}></MenuIcon>
               <Drawer
                 anchor="right"
                 open={isDrawerOpen}
-                onClose={toggleDrawer()}
+                onClose={toggleDrawer}
                 PaperProps={{
                   sx: {
                     backgroundColor: "#c3b3a4",
@@ -113,26 +117,30 @@ export const Navbar = () => {
                 mb: 2.5,
               }}
             >
-              <Typography
-                sx={styles.NavbarText}
-                onClick={() => {
-                  navigate("/");
-                }}
-              >
+              <Typography sx={styles.NavbarText} onClick={() => goNav("/")}>
                 首頁 Home
               </Typography>
               <Typography
                 sx={styles.NavbarText}
-                onClick={() => {
-                  navigate("/dessert");
-                }}
+                onClick={() => goNav("dessert")}
               >
                 甜點Dessert
               </Typography>
-              <Typography sx={styles.NavbarText}>麵包Bread</Typography>
-              <Typography sx={styles.NavbarText}>咖啡Coffee</Typography>
-              <Typography sx={styles.NavbarText}>關於我們About us</Typography>
-              <Typography sx={styles.NavbarText}>Q&A</Typography>
+              <Typography sx={styles.NavbarText} onClick={() => goNav("bread")}>
+                麵包Bread
+              </Typography>
+              <Typography
+                sx={styles.NavbarText}
+                onClick={() => goNav("coffee")}
+              >
+                咖啡Coffee
+              </Typography>
+              <Typography sx={styles.NavbarText} onClick={() => goNav("about")}>
+                關於我們About us
+              </Typography>
+              <Typography sx={styles.NavbarText} onClick={() => goNav("qa")}>
+                Q&A
+              </Typography>
             </Box>
           </Toolbar>
         </AppBar>
