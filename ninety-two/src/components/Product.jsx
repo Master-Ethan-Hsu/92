@@ -2,7 +2,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import { Box, Divider } from "@mui/material";
 export const Product = (productData) => {
-  console.log(productData);
+  // console.log(productData);
   return (
     <Box
       sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-evenly" }}

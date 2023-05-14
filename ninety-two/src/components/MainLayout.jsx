@@ -5,9 +5,8 @@ import { useLocation } from "react-router-dom";
 
 const styles = {
   mainContainer: {
-    height: "150vh",
+    height: "100%",
     backgroundColor: "#FDF5E6",
-    overflow: "hidden",
   },
   landingImage: {
     // position:"sticky",

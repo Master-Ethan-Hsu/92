@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Product from "./Product";
-import { usePrdouctCate } from "./../hook/usePrdouctCate";
+import { getPrdouctCate } from "./../hook/usePrdouctCate";
 
 export const Bread = () => {
   const [breadData, setBreadData] = useState();
-  const bread = usePrdouctCate("bread");
+  const bread = getPrdouctCate("bread");
 
   useEffect(() => {
     bread.then((data) => {

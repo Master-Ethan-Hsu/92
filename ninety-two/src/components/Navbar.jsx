@@ -103,6 +103,7 @@ export const Navbar = () => {
               color="inherit"
               aria-label="menu"
               sx={{ mr: 2 }}
+              onClick={() => goNav("/")}
             >
               <Box
                 component="img"
